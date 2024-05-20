@@ -5,10 +5,8 @@ This is a GUI i made for Mupen64Plus in Python. And useful if someone doesn't wa
 
 **NOTE:** I dont own Mupen64Plus. It's original developer is Hacktarux. 
 
-# Minimum Requirements:
+# Requirements:
 
-- Python 3.5
-- Windows 7
 - psutil (for the compatibility checker)
 - json (for the mupen64plus_config.json file and saving the settings)
 - subprocess (for the commands to run)
