@@ -208,13 +208,17 @@ class Mupen64PlusGUI:
 
         
         game_controls_info = """
-        Up: Up Arrow Key
-        Down: Down Arrow Key
-        Left: Left Arrow Key
-        Right: Right Arrow Key
-        A Button: Z Key
-        B Button: X Key
-        Start: Enter Key
+        Analog Pad: Arrow Keys (left, right, down, up)
+        C Up/Left/Down/Right: "I", "J", "K", "L"
+        DPad Up/Left/Down/Right: "W", "A", "S", "D"
+        Z trigger: "z"
+        Left trigger: "x"
+        Right trigger: "c"
+        Start: "Enter" ("Return")
+        A button: "left shift"
+        B button: "left control"
+        Select Mempack: ","
+        Select Rumblepack: "."
         """
 
         tk.Label(game_controls_window, text=game_controls_info, padx=10, pady=10).pack()
