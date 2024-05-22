@@ -19,8 +19,9 @@ This is meant to run on Windows.
 # Configuration:
 
 1. Click on the **Settings** menu and then the **Set Path and Video Plugin** button.
-2. Click on the **Browse** button and find the executable file. (mupen64plus-ui-console.exe)
-3. Close the **Set Path and Video Plugin** window. Select the ROM and then click **Run ROM** from the **File** menu or click on the button under the **ROM Path**.
+2. Click on the **Browse** button next to the Mupen64Plus Path text and find the executable file. (mupen64plus-ui-console.exe)
+3. Click on the **Browse** button next to the JSON File Path text and find the JSON file. (mupen64plus_config.json)
+4. Close the **Set Path and Video Plugin** window. Select the ROM and then click **Run ROM** from the **File** menu or click on the button under the **ROM Path**.
 
 
 # Credits:
