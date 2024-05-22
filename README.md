@@ -13,7 +13,7 @@ This is a GUI i made for Mupen64Plus in Python. And useful if someone doesn't wa
 
 # Installation:
 
-1. Copy the gui.py and the mupen64plus_config.json files to the same directory as the Mupen64Plus executable (mupen64plus-ui-console.exe)
+1. Open the installer.bat file. Type the Mupen64Plus-core directory. And you can create a shortcut of gui.exe on desktop. 
 
 # Configuration:
 
