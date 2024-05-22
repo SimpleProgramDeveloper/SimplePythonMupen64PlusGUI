@@ -14,7 +14,7 @@ This is meant to run on Windows.
 
 # Installation:
 
-1. Open the installer.bat file. Type the Mupen64Plus-core directory. And you can create a shortcut of gui.exe on desktop. 
+1. Open the installer.bat file. And type the Mupen64Plus-core directory. 
 
 # Configuration:
 
