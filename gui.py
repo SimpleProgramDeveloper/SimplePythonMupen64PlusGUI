@@ -23,20 +23,17 @@ class Mupen64PlusGUI:
         self.rom_path = tk.StringVar()
         self.mupen64plus_path = tk.StringVar()
         self.video_plugin = tk.StringVar()
-        self.cheat_codes = tk.StringVar()  
+        self.cheat_codes = tk.StringVar()
+        self.config_file_path = tk.StringVar()  
         self.emulator_process = None  
         
         self.load_config()
         
-        
         self.create_menus()
-        
-        
         self.create_widgets()
     
     def create_menus(self):
         menubar = tk.Menu(self.root)
-        
         
         file_menu = tk.Menu(menubar, tearoff=0)
         file_menu.add_command(label="Select ROM", command=self.browse_rom)
@@ -46,35 +43,28 @@ class Mupen64PlusGUI:
         file_menu.add_command(label="Exit", command=self.root.quit)
         menubar.add_cascade(label="File", menu=file_menu)
         
-        
         settings_menu = tk.Menu(menubar, tearoff=0)
         settings_menu.add_command(label="Set Path and Video Plugin", command=self.open_settings)
         menubar.add_cascade(label="Settings", menu=settings_menu)
         
-        
         help_menu = tk.Menu(menubar, tearoff=0)
         help_menu.add_command(label="About Video Plugins", command=self.open_help)
         help_menu.add_command(label="Check Compatibility", command=self.check_compatibility)
-        help_menu.add_command(label="Game Controls", command=self.show_game_controls)  
-        help_menu.add_command(label="Mupen64Plus Controls", command=self.show_mupen64plus_controls)  # Add Mupen64Plus Controls option
+        help_menu.add_command(label="Game Controls", command=self.show_game_controls)
+        help_menu.add_command(label="Mupen64Plus Controls", command=self.show_mupen64plus_controls)
         menubar.add_cascade(label="Help", menu=help_menu)
         
         self.root.config(menu=menubar)
     
     def create_widgets(self):
-        
         tk.Label(self.root, text="ROM Path:").place(x=20, y=50)
         tk.Entry(self.root, textvariable=self.rom_path, width=40).place(x=100, y=50)
-        
         
         tk.Label(self.root, text="Cheat Codes:").place(x=20, y=100)
         self.cheat_codes_entry = tk.Entry(self.root, textvariable=self.cheat_codes, width=40)
         self.cheat_codes_entry.place(x=100, y=100)
         
-        
         tk.Button(self.root, text="Run ROM", command=self.run_rom).place(x=20, y=150)
-        
-        
         tk.Button(self.root, text="Show Cheat List", command=self.show_cheat_list).place(x=120, y=150)
 
     def browse_rom(self):
@@ -101,8 +91,8 @@ class Mupen64PlusGUI:
             messagebox.showerror("Error", "Please set the video plugin in the settings.")
             return
         
-        cheat_codes = self.cheat_codes.get()  
-        command = [mupen64plus_path, '--gfx', video_plugin, '--cheats', cheat_codes, rom_path]  # Pass cheat codes as argument
+        cheat_codes = self.cheat_codes.get()
+        command = [mupen64plus_path, '--gfx', video_plugin, '--cheats', cheat_codes, rom_path]
         try:
             self.emulator_process = subprocess.Popen(command)
         except OSError as e:
@@ -111,9 +101,9 @@ class Mupen64PlusGUI:
     def close_rom(self):
         if self.emulator_process:
             self.emulator_process.terminate()
-            self.rom_path.set('')  
             self.rom_path.set('')
-            self.cheat_codes.set('')  
+            self.rom_path.set('')
+            self.cheat_codes.set('')
         else:
             messagebox.showinfo("Info", "Please select a ROM file and then click on 'Run ROM'.")
 
@@ -130,7 +120,11 @@ class Mupen64PlusGUI:
         video_plugin_menu = ttk.Combobox(settings_window, textvariable=self.video_plugin, values=video_plugins)
         video_plugin_menu.grid(row=1, column=1, padx=5, pady=5)
         
-        tk.Button(settings_window, text="Save", command=lambda: self.save_settings(settings_window)).grid(row=2, column=1, pady=10)
+        tk.Label(settings_window, text="Config File Path:").grid(row=2, column=0, padx=5, pady=5, sticky='e')
+        tk.Entry(settings_window, textvariable=self.config_file_path, width=40).grid(row=2, column=1, padx=5, pady=5)
+        tk.Button(settings_window, text="Browse", command=self.browse_config_file).grid(row=2, column=2, padx=5, pady=5)
+        
+        tk.Button(settings_window, text="Save", command=lambda: self.save_settings(settings_window)).grid(row=3, column=1, pady=10)
     
     def browse_mupen64plus(self):
         mupen64plus_file = filedialog.askopenfilename(
@@ -139,6 +133,14 @@ class Mupen64PlusGUI:
         )
         if mupen64plus_file:
             self.mupen64plus_path.set(mupen64plus_file)
+    
+    def browse_config_file(self):  
+        config_file = filedialog.askopenfilename(
+            title="Select Config File",
+            filetypes=(("JSON files", "*.json"), ("All files", "*.*"))
+        )
+        if config_file:
+            self.config_file_path.set(config_file)
     
     def save_settings(self, settings_window):
         self.save_config()
@@ -155,7 +157,7 @@ class Mupen64PlusGUI:
         tk.Label(help_window, text=help_text, justify=tk.LEFT, padx=10, pady=10).pack()
     
     def check_compatibility(self):
-        ram = psutil.virtual_memory().total / (1024 ** 3)  
+        ram = psutil.virtual_memory().total / (1024 ** 3)
         recommended_plugin = ""
 
         if ram >= 8:
@@ -256,22 +258,22 @@ class Mupen64PlusGUI:
                     config = json.load(file)
                     self.mupen64plus_path.set(config.get('mupen64plus_path', ''))
                     self.video_plugin.set(config.get('video_plugin', ''))
+                    self.config_file_path.set(config.get('config_file_path', ''))  
             except json.JSONDecodeError:
-                
                 self.mupen64plus_path.set('')
                 self.video_plugin.set('')
+                self.config_file_path.set('')  
     
     def save_config(self):
         config = {
             'mupen64plus_path': self.mupen64plus_path.get(),
-            'video_plugin': self.video_plugin.get()
+            'video_plugin': self.video_plugin.get(),
+            'config_file_path': self.config_file_path.get()  
         }
         with open(CONFIG_FILE, 'w') as file:
-           
-           json.dump(config, file, indent=4)
+            json.dump(config, file, indent=4)
 
 if __name__ == "__main__":
     root = tk.Tk()
     app = Mupen64PlusGUI(root)
     root.mainloop()
-
