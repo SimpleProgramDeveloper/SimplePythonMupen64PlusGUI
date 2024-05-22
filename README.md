@@ -14,7 +14,7 @@ This is meant to run on Windows.
 
 # Installation:
 
-1. Open the installer.bat file. And type the Mupen64Plus-core directory. 
+1. Open the installer.bat file. And type the Mupen64Plus-core directory. **(Type the same directory that includes mupen64plus's dll files and executable)**
 
 # Configuration:
 
