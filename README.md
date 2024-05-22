@@ -2,6 +2,7 @@
 
 # About: 
 This is a GUI i made for Mupen64Plus in Python. And useful if someone doesn't want to run commands from the command prompt.
+This is meant to run on Windows.
 
 **NOTE:** I dont own Mupen64Plus. It's original developer is Hacktarux. 
 
